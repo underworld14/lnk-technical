@@ -6,13 +6,12 @@ import throwValidationMiddleware from "@server/middlewares/validation.middleware
 
 const router = express.Router();
 
+router.get("/profile", authMiddleware, authController.getCurrentProfileController);
+
 router.post(
   "/register",
   [
-    body("email")
-      .isEmail()
-      .withMessage("Enter a valid email address")
-      .notEmpty(),
+    body("email").isEmail().withMessage("Enter a valid email address").notEmpty(),
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")
@@ -25,10 +24,7 @@ router.post(
 router.post(
   "/login",
   [
-    body("email")
-      .isEmail()
-      .withMessage("Enter a valid email address")
-      .notEmpty(),
+    body("email").isEmail().withMessage("Enter a valid email address").notEmpty(),
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long")

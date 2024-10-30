@@ -1,8 +1,4 @@
-import {
-  register,
-  login,
-  recordAuthActivity,
-} from "@server/services/auth.service.js";
+import { register, login, recordAuthActivity, getUserById } from "@server/services/auth.service.js";
 import { AppError } from "@server/utils/error.js";
 import { generateJWTToken } from "@server/utils/security.js";
 import { Request, Response } from "express";
@@ -60,5 +56,19 @@ export const logoutController = async (req: Request, res: Response) => {
   return res.status(200).json({
     status: "success",
     message: "Logged out successfully",
+  });
+};
+
+export const getCurrentProfileController = async (req: Request, res: Response) => {
+  const userId = req.user?.userId as string;
+  const user = await getUserById(userId);
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: user,
   });
 };
