@@ -1,6 +1,8 @@
 import express from "express";
 import { body } from "express-validator";
 import * as authController from "@server/controllers/auth.controller.js";
+import authMiddleware from "@server/middlewares/auth.middleware.js";
+import throwValidationMiddleware from "@server/middlewares/validation.middleware.js";
 
 const router = express.Router();
 
@@ -16,6 +18,7 @@ router.post(
       .withMessage("Password must be at least 6 characters long")
       .notEmpty(),
   ],
+  throwValidationMiddleware,
   authController.registerController
 );
 
@@ -31,7 +34,10 @@ router.post(
       .withMessage("Password must be at least 6 characters long")
       .notEmpty(),
   ],
+  throwValidationMiddleware,
   authController.loginController
 );
+
+router.post("/logout", authMiddleware, authController.logoutController);
 
 export default router;

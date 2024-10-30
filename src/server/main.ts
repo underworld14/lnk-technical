@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import helmet from "helmet";
 import ViteExpress from "vite-express";
 
 dotenv.config();
@@ -11,9 +13,11 @@ import notFoundMiddleware from "./middlewares/not-found.middleware.js";
 
 const app = express();
 
+app.use(helmet());
 app.use(morgan("dev"));
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 

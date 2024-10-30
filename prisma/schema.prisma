@@ -35,6 +35,7 @@ model AuthHistory {
 
 model Mailing {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
   email     String
   date      DateTime
   description String

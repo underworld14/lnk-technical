@@ -30,5 +30,10 @@ export const generateJWTToken = (payload: Record<string, any>) => {
 };
 
 export const decodeJWTToken = (token: string) => {
-  return jwt.verify(token, APP_KEY);
+  try {
+    const decoded = jwt.verify(token, APP_KEY) as Record<string, any>;
+    return decoded;
+  } catch (error) {
+    return null;
+  }
 };
