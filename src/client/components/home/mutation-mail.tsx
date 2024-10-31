@@ -30,13 +30,18 @@ export default function MutationMail({ open, onOpenChange, editData }: MutationM
         date: new Date(editData.date),
         description: editData.description,
       });
+    } else {
+      form.reset({
+        email: "",
+        date: new Date(),
+        description: "",
+      });
     }
   }, [editData]);
 
   const { mutate, isPending } = useCreateMail({
     onSuccess: () => {
       toast.success("Mail data created successfully");
-      form.reset();
       onOpenChange(false);
     },
     onError: (error) => {
@@ -47,7 +52,6 @@ export default function MutationMail({ open, onOpenChange, editData }: MutationM
   const { mutate: mutateUpdate, isPending: updateLoading } = useUpdateMail({
     onSuccess: () => {
       toast.success("Mail data updated successfully");
-      form.reset();
       onOpenChange(false);
     },
     onError: (error) => {
@@ -58,7 +62,6 @@ export default function MutationMail({ open, onOpenChange, editData }: MutationM
   const { mutate: mutateDelete, isPending: deleteLoading } = useDeleteMail({
     onSuccess: () => {
       toast.success("Mail data deleted successfully");
-      form.reset();
       onOpenChange(false);
     },
     onError: (error) => {
@@ -69,7 +72,6 @@ export default function MutationMail({ open, onOpenChange, editData }: MutationM
   const { mutate: sendMail, isPending: sendLoading } = useSendMail({
     onSuccess: () => {
       toast.success("Mail sent successfully");
-      form.reset();
       onOpenChange(false);
     },
     onError: (error) => {
