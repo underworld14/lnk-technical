@@ -1,10 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-
-interface MutationOpts {
-  onSuccess?: (response?: any) => void;
-  onError?: (error: any) => void;
-}
+import { MutationOpts } from "@/types/query";
 
 export const useRegister = (opts?: MutationOpts) => {
   return useMutation({

@@ -9,7 +9,7 @@ dotenv.config();
 
 import apiRoutes from "./routes/index.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
-import notFoundMiddleware from "./middlewares/not-found.middleware.js";
+// import notFoundMiddleware from "./middlewares/not-found.middleware.js";
 
 const app = express();
 
@@ -23,9 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", apiRoutes);
 
-ViteExpress.listen(app, 3000, () =>
-  console.log("Server is listening on port 3000...")
-);
+ViteExpress.listen(app, 3000, () => console.log("Server is listening on port 3000..."));
 
 // // 404 handler
 // app.use(notFoundMiddleware);
