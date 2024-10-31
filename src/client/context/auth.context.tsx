@@ -30,13 +30,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const setUserData = (user: any) => {
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
   useEffect(() => {
     // check user
     reloadAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, reloadAuth, loading }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, setUser: setUserData, reloadAuth, loading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
