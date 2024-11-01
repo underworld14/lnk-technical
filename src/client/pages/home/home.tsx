@@ -6,14 +6,24 @@ import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import { useMails } from "@/queries/mail.query";
 import { Button } from "@/components/ui/button";
 import MutationMail from "@/components/home/mutation-mail";
+import { useLogout } from "@/queries/auth.query";
+import { useAuthData } from "@/context/auth.context";
 
 const localizer = dayjsLocalizer(dayjs);
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [editData, setEditData] = useState<any>(null);
+  const authData = useAuthData();
 
   const { data } = useMails();
+
+  const { mutate: logout } = useLogout({
+    onSuccess: () => {
+      authData?.setUser(null);
+      window.location.href = "/auth/login";
+    },
+  });
 
   const events = data?.data?.map((mail: any) => ({
     id: mail.id,
@@ -32,7 +42,8 @@ export default function Home() {
   return (
     <div className="h-screen w-screen">
       <div className="w-full max-w-screen-lg mx-auto py-12">
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <Button onClick={() => logout()}>Logout</Button>
           <Button onClick={() => setOpen(true)}>Create</Button>
         </div>
 

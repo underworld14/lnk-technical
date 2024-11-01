@@ -17,3 +17,11 @@ export const useLogin = (opts?: MutationOpts) => {
     onError: opts?.onError,
   });
 };
+
+export const useLogout = (opts?: MutationOpts) => {
+  return useMutation({
+    mutationFn: () => api.post("/auth/logout"),
+    onSuccess: opts?.onSuccess,
+    onError: opts?.onError,
+  });
+};
